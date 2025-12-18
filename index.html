@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade & Expense Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <h1 class="logo-text">TX<span class="highlight">TRACKER</span></h1>
+            <nav class="main-nav">
+                <button class="nav-btn active" data-tab="trades">TRADES</button>
+                <button class="nav-btn" data-tab="expenses">EXPENSES</button>
+                <button class="nav-btn" data-tab="reports">REPORTS</button>
+            </nav>
+        </header>
+
+        <main class="content-area">
+            <!-- TRADES SECTION -->
+            <section id="trades" class="view-section active">
+                <div class="section-header">
+                    <h2>Trade Log</h2>
+                    <button id="add-trade-btn" class="action-btn">+ LOG TRADE</button>
+                </div>
+                
+                <div class="stats-ticker">
+                    <div class="stat-item">
+                        <span class="label">NET P&L</span>
+                        <span class="value" id="net-pnl">$0.00</span>
+                    </div>
+                     <div class="stat-item">
+                        <span class="label">WIN RATE</span>
+                        <span class="value" id="win-rate">0%</span>
+                    </div>
+                </div>
+
+                <div class="form-container hidden" id="trade-form-container">
+                    <h3>New Trade</h3>
+                    <form id="trade-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>SYMBOL</label>
+                                <input type="text" id="t-symbol" placeholder="e.g. BTC/USD" required>
+                            </div>
+                            <div class="form-group">
+                                <label>TYPE</label>
+                                <select id="t-type">
+                                    <option value="LONG">LONG</option>
+                                    <option value="SHORT">SHORT</option>
+                                    <option value="SPOT">SPOT</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>ENTRY PRICE</label>
+                                <input type="number" step="any" id="t-entry" required>
+                            </div>
+                            <div class="form-group">
+                                <label>EXIT PRICE</label>
+                                <input type="number" step="any" id="t-exit">
+                            </div>
+                             <div class="form-group">
+                                <label>QUANTITY</label>
+                                <input type="number" step="any" id="t-qty" required>
+                            </div>
+                            <div class="form-group">
+                                <label>DATE</label>
+                                <input type="date" id="t-date" required>
+                            </div>
+                        </div>
+                         <div class="form-group full-width">
+                            <label>NOTES</label>
+                            <textarea id="t-notes" rows="2"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="cancel-btn" id="cancel-trade-btn">CANCEL</button>
+                            <button type="submit" class="submit-btn">SAVE TRADE</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="list-container" id="trade-list">
+                    <!-- Trades injected here -->
+                    <div class="empty-state">No trades logged yet.</div>
+                </div>
+            </section>
+
+            <!-- EXPENSES SECTION -->
+            <section id="expenses" class="view-section">
+                <div class="section-header">
+                    <h2>Expenses</h2>
+                    <button id="add-expense-btn" class="action-btn">+ ADD EXPENSE</button>
+                </div>
+                 <div class="stats-ticker">
+                    <div class="stat-item">
+                        <span class="label">TOTAL EXPENSES</span>
+                        <span class="value" id="total-expenses">$0.00</span>
+                    </div>
+                </div>
+
+                <div class="form-container hidden" id="expense-form-container">
+                    <h3>New Expense</h3>
+                    <form id="expense-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>CATEGORY</label>
+                                <select id="e-category">
+                                    <option value="Tools">Tools/Software</option>
+                                    <option value="Education">Education</option>
+                                    <option value="Commissions">Commissions</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>AMOUNT</label>
+                                <input type="number" step="0.01" id="e-amount" required>
+                            </div>
+                            <div class="form-group">
+                                <label>DATE</label>
+                                <input type="date" id="e-date" required>
+                            </div>
+                             <div class="form-group full-width">
+                                <label>DESCRIPTION</label>
+                                <input type="text" id="e-desc" placeholder="Details...">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                             <button type="button" class="cancel-btn" id="cancel-expense-btn">CANCEL</button>
+                            <button type="submit" class="submit-btn">SAVE EXPENSE</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="list-container" id="expense-list">
+                    <!-- Expenses injected here -->
+                     <div class="empty-state">No expenses recorded.</div>
+                </div>
+            </section>
+
+            <!-- REPORTS SECTION -->
+            <section id="reports" class="view-section">
+                 <div class="section-header">
+                    <h2>Performance Reports</h2>
+                    <div class="report-controls">
+                        <select id="report-period">
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <h3>Net Profit</h3>
+                        <div class="big-number" id="report-net-profit">--</div>
+                    </div>
+                    <div class="card">
+                        <h3>Total Fees/Expenses</h3>
+                        <div class="big-number" id="report-expenses">--</div>
+                    </div>
+                     <div class="card">
+                        <h3>Trade Count</h3>
+                         <div class="big-number" id="report-count">--</div>
+                    </div>
+                </div>
+
+                <div class="list-container" id="report-details">
+                    <!-- Detailed breakdown if needed -->
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

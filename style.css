@@ -518,6 +518,60 @@ textarea:focus {
     }
 }
 
+/* Mascots */
+.mascot {
+    position: absolute;
+    opacity: 0.3;
+    z-index: 0;
+    pointer-events: none;
+    transition: all 0.5s ease;
+    filter: blur(4px) drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+    perspective: 1000px;
+}
+
+.bull-mascot {
+    top: 5%;
+    right: 5%;
+    width: 200px;
+    /* Made small as requested */
+    transform: rotateY(-20deg) rotateZ(-10deg);
+    animation: breathe 6s infinite ease-in-out;
+}
+
+.bear-mascot {
+    bottom: 0;
+    left: 0;
+    width: 400px;
+    /* Larger bear as implied by 'add bear' prominence */
+    transform: rotateY(20deg) rotateZ(10deg);
+    filter: blur(6px) drop-shadow(0 0 20px rgba(255, 0, 0, 0.3));
+    animation: floatBear 8s infinite ease-in-out;
+}
+
+@keyframes breathe {
+
+    0%,
+    100% {
+        transform: scale(1) rotateY(-20deg);
+    }
+
+    50% {
+        transform: scale(1.05) rotateY(-15deg);
+    }
+}
+
+@keyframes floatBear {
+
+    0%,
+    100% {
+        transform: translateY(0) rotateY(20deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotateY(25deg);
+    }
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 600px) {
     .app-container {

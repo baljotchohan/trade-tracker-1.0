@@ -11,6 +11,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -180,6 +181,11 @@
                     <div class="card">
                         <h3>Trade Count</h3>
                         <div class="big-number" id="report-count">--</div>
+                    </div>
+                    <!-- New Chart Card -->
+                    <div class="card" style="grid-column: 1 / -1;">
+                        <h3>P&L Growth</h3>
+                        <canvas id="pnl-chart"></canvas>
                     </div>
                 </div>
 

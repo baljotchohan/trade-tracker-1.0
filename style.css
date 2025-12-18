@@ -532,8 +532,8 @@ textarea:focus {
 .bull-mascot {
     top: 5%;
     right: 5%;
-    width: 200px;
-    /* Made small as requested */
+    width: 400px;
+    /* Resized to match bear */
     transform: rotateY(-20deg) rotateZ(-10deg);
     animation: breathe 6s infinite ease-in-out;
 }

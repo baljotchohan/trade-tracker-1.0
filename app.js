@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Lists & Stats
     const tradeList = document.getElementById('trade-list');
     const expenseList = document.getElementById('expense-list');
-    
+
     // Stats Elements
     const netPnlEl = document.getElementById('net-pnl');
     const winRateEl = document.getElementById('win-rate');
@@ -53,9 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 section.classList.remove('active');
                 if (section.id === tabId) section.classList.add('active');
             });
-            
+
             // Refresh reports if entering report tab
-            if(tabId === 'reports') updateReports();
+            if (tabId === 'reports') updateReports();
         });
     });
 
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     tradeForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        
+
         const entry = parseFloat(document.getElementById('t-entry').value);
         const exit = document.getElementById('t-exit').value ? parseFloat(document.getElementById('t-exit').value) : null;
         const qty = parseFloat(document.getElementById('t-qty').value);
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         saveData();
         renderTrades();
         updateGlobalStats();
-        
+
         tradeFormContainer.classList.add('hidden');
         tradeForm.reset();
     });
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     expenseForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        
+
         const newExpense = {
             id: Date.now(),
             category: document.getElementById('e-category').value,
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         saveData();
         renderExpenses();
         updateGlobalStats();
-        
+
         expenseFormContainer.classList.add('hidden');
         expenseForm.reset();
     });
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- GLOBAL ACTIONS ---
     // Event delegation for deletes
     tradeList.addEventListener('click', (e) => {
-        if(e.target.classList.contains('delete-btn')) {
+        if (e.target.classList.contains('delete-btn')) {
             // Find index - in this structure, we might need a surer way than onclick attr if we use delegation
             // I used onclick in trade HTML but data-id in expense. Consolidating logic.
             // Wait, I put onclick="deleteTrade" in HTML string. That needs a global function.
@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // We need to expose delete functions or handle via delegation completely.
     // Let's rewrite delegation for both.
     window.deleteTrade = (id) => {
-        if(confirm('Delete this trade?')) {
+        if (confirm('Delete this trade?')) {
             trades = trades.filter(t => t.id !== id);
             saveData();
             renderTrades();
@@ -236,9 +236,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // For expenses, I used data-id in the render function above
     expenseList.addEventListener('click', (e) => {
-        if(e.target.classList.contains('delete-btn')) {
+        if (e.target.classList.contains('delete-btn')) {
             const id = parseInt(e.target.getAttribute('data-id'));
-            if(confirm('Delete this expense?')) {
+            if (confirm('Delete this expense?')) {
                 expenses = expenses.filter(e => e.id !== id);
                 saveData();
                 renderExpenses();
@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function formatMoney(num) {
-        return '$' + num.toFixed(2);
+        return '₹' + num.toFixed(2);
     }
 
     function updateGlobalStats() {
@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateReports() {
         const period = reportPeriodEl.value; // weekly, monthly, yearly
         const now = new Date();
-        
+
         // Filter Dates
         let startTime;
         if (period === 'weekly') {
@@ -303,11 +303,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Calc
         const reportPnl = filteredTrades.reduce((sum, t) => sum + (t.status === 'CLOSED' ? t.pnl : 0), 0);
         const reportExp = filteredExpenses.reduce((sum, e) => sum + e.amount, 0);
-        
+
         // Update UI
         reportNetProfitEl.textContent = formatMoney(reportPnl);
         reportNetProfitEl.className = 'big-number ' + (reportPnl >= 0 ? 'pnl-green' : 'pnl-red');
-        
+
         reportExpensesEl.textContent = formatMoney(reportExp);
         reportCountEl.textContent = filteredTrades.length;
     }
